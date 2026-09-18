@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RVX HUB</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 20%, #35145f 0%, #160b25 38%, #08060d 80%);
+}
+
+/* Background */
+.background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.grid {
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(rgba(168,85,247,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,.045) 1px, transparent 1px);
+  background-size: 55px 55px;
+  transform: rotate(8deg);
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  from {
+    transform: translate(0,0) rotate(8deg);
+  }
+  to {
+    transform: translate(55px,55px) rotate(8deg);
+  }
+}
+
+.orb {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: #7c3aed;
+  filter: blur(120px);
+  opacity: .16;
+  animation: float 8s ease-in-out infinite alternate;
+}
+
+.orb.one {
+  top: -140px;
+  left: -120px;
+}
+
+.orb.two {
+  right: -130px;
+  bottom: -150px;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  from {
+    transform: translate(0,0);
+  }
+  to {
+    transform: translate(70px,-45px);
+  }
+}
+
+/* Main card */
+.card {
+  position: relative;
+  z-index: 5;
+
+  width: min(90%, 430px);
+  padding: 36px 28px;
+
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 24px;
+
+  background: rgba(15,9,24,.72);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.45),
+    0 0 45px rgba(124,58,237,.10);
+
+  animation: cardIn .8s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Logo */
+.logo {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(168,85,247,.45);
+  border-radius: 16px;
+
+  background: rgba(124,58,237,.12);
+
+  box-shadow:
+    0 0 30px rgba(124,58,237,.18);
+
+  animation: logoPulse 4s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%,100% {
+    box-shadow: 0 0 25px rgba(124,58,237,.12);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(124,58,237,.30);
+  }
+}
+
+.logo svg {
+  width: 27px;
+  height: 27px;
+  stroke: #c4b5fd;
+  stroke-width: 1.7;
+  fill: none;
+}
+
+/* Text */
+.title {
+  text-align: center;
+  font-size: 34px;
+  letter-spacing: 5px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: #a1a1aa;
+  font-size: 14px;
+  margin-top: 9px;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.button {
+  width: 100%;
+  height: 54px;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  border: 1px solid rgba(168,85,247,.28);
+  border-radius: 14px;
+
+  background: rgba(124,58,237,.12);
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform .3s ease,
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  background: rgba(124,58,237,.22);
+  border-color: rgba(168,85,247,.55);
+  box-shadow: 0 12px 30px rgba(124,58,237,.16);
+}
+
+.button:active {
+  transform: scale(.98);
+}
+
+.button.primary {
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+
+  border-color: transparent;
+}
+
+.button.primary:hover {
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #7c3aed
+  );
+
+  box-shadow: 0 12px 35px rgba(124,58,237,.30);
+}
+
+.button svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+}
+
+/* Code page */
+#codePage {
+  display: none;
+}
+
+.code-box {
+  margin: 22px 0 8px;
+
+  padding: 16px;
+
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 13px;
+
+  background: rgba(0,0,0,.28);
+
+  color: #c4b5fd;
+
+  font-family: monospace;
+  font-size: 12px;
+
+  text-align: left;
+
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  height: 18px;
+  margin-top: 8px;
+
+  color: #a78bfa;
+  font-size: 12px;
+
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.status.show {
+  opacity: 1;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  color: #52525b;
+  font-size: 11px;
+  margin-top: 22px;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+  <div class="grid"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+</div>
+
+
+<!-- HOME -->
+<div class="card" id="homePage">
+
+  <div class="logo">
+    <svg viewBox="0 0 24 24">
+      <path d="M5 17L12 5L19 17"/>
+      <path d="M8.5 14H15.5"/>
+    </svg>
+  </div>
+
+  <h1 class="title">RVX HUB</h1>
+
+  <div class="subtitle">
+    Official Hub
+  </div>
+
+  <button class="button primary"
+    onclick="window.location.href='https://discord.gg/WQePykh3yJ'">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M8 10h.01"/>
+      <path d="M16 10h.01"/>
+      <path d="M8.5 15c2 1.5 5 1.5 7 0"/>
+      <path d="M7 7.5C9 6 15 6 17 7.5"/>
+      <path d="M6.5 18.5L4 20V8.5C4 6.6 5.6 5 7.5 5h9C18.4 5 20 6.6 20 8.5V17c0 1.9-1.6 3.5-3.5 3.5h-6"/>
+    </svg>
+
+    Discord
+  </button>
+
+
+  <button class="button" onclick="showCode()">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M8 8L4 12L8 16"/>
+      <path d="M16 8L20 12L16 16"/>
+      <path d="M14 5L10 19"/>
+    </svg>
+
+    Get Script
+  </button>
+
+  <div class="footer">
+    RVX HUB
+  </div>
+
+</div>
+
+
+<!-- CODE -->
+<div class="card" id="codePage">
+
+  <div class="logo">
+    <svg viewBox="0 0 24 24">
+      <path d="M8 8L4 12L8 16"/>
+      <path d="M16 8L20 12L16 16"/>
+      <path d="M14 5L10 19"/>
+    </svg>
+  </div>
+
+  <h1 class="title">SCRIPT</h1>
+
+  <div class="subtitle">
+    Copy the script below
+  </div>
+
+  <div class="code-box" id="code">
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RVXv2/RVX-hub/main/main.lua"))()
+  </div>
+
+  <button class="button primary" onclick="copyCode()">
+
+    <svg viewBox="0 0 24 24">
+      <rect x="8" y="8" width="11" height="11" rx="2"/>
+      <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+    </svg>
+
+    Copy Script
+  </button>
+
+  <div class="status" id="status">
+    Copied
+  </div>
+
+  <button class="button" onclick="goBack()">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M19 12H5"/>
+      <path d="M11 6L5 12L11 18"/>
+    </svg>
+
+    Back
+  </button>
+
+  <div class="footer">
+    RVX HUB
+  </div>
+
+</div>
+
+
+<script>
+
+function showCode() {
+  const home = document.getElementById("homePage");
+  const code = document.getElementById("codePage");
+
+  home.style.display = "none";
+  code.style.display = "block";
+}
+
+function goBack() {
+  const home = document.getElementById("homePage");
+  const code = document.getElementById("codePage");
+
+  code.style.display = "none";
+  home.style.display = "block";
+}
+
+function copyCode() {
+
+  const code =
+    document.getElementById("code").innerText.trim();
+
+  navigator.clipboard.writeText(code).then(() => {
+
+    const status =
+      document.getElementById("status");
+
+    status.classList.add("show");
+
+    setTimeout(() => {
+      status.classList.remove("show");
+    }, 1800);
+
+  }).catch(() => {
+
+    alert("Copy failed");
+
+  });
+}
+
+</script>
+
+</body>
+</html>
